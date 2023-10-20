@@ -1,5 +1,5 @@
-import { FC, useEffect, useMemo } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { FC, ReactNode, useEffect, useMemo } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from 'components/header/Header';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from 'config/firebase';
@@ -7,7 +7,11 @@ import { User } from 'domain/entities/user';
 import { setUser } from 'store/auth/slice';
 import { useAppDispatch } from 'store/hooks';
 
-const DefaultLayout: FC = () => {
+interface Props {
+  children?: ReactNode;
+}
+
+const DefaultLayout: FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,9 +44,7 @@ const DefaultLayout: FC = () => {
   return (
     <section className="min-h-screen bg-gray-50">
       {showHeader && <Header />}
-      <main className="p-4 mx-auto max-w-7xl">
-        <Outlet />
-      </main>
+      <main className="p-4 mx-auto max-w-7xl">{props.children}</main>
     </section>
   );
 };
