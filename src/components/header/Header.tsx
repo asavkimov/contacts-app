@@ -13,10 +13,10 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 bg-white shadow-md">
+    <header className="sticky top-0 bg-white shadow-sm shadow-primary-light">
       <div className="flex items-center justify-between p-4 mx-auto max-w-7xl">
-        <p>AX CONNECTS</p>
-        <Button className="btn btn-light" onClick={handleLogout}>
+        <h1 className="text-primary font-bold">AX CONNECTS</h1>
+        <Button className="btn btn-primary py-2" onClick={handleLogout}>
           Выйти
         </Button>
       </div>

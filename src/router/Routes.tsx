@@ -1,8 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import LoginPage from 'components/login-page/LoginPage';
-import RegisterPage from 'components/register-page/RegisterPage';
+import LoginPage from 'components/auth-page/LoginPage';
+import RegisterPage from 'components/auth-page/RegisterPage';
 import DefaultLayout from 'components/layout/DefaultLayout';
+import ContactsPage from 'components/contacts-page/ContactsPage';
 
 const routes = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const routes = createBrowserRouter([
       {
         path: '/login',
         element: <LoginPage />,
+      },
+      {
+        path: '/',
+        element: <ContactsPage />,
       },
     ],
   },

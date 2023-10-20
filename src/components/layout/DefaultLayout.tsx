@@ -5,7 +5,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from 'config/firebase';
 import { User } from 'domain/entities/user';
 import { setUser } from 'store/auth/slice';
-import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { useAppDispatch } from 'store/hooks';
 
 const DefaultLayout: FC = () => {
   const dispatch = useAppDispatch();
@@ -16,7 +16,7 @@ const DefaultLayout: FC = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const data: User = {
-          id: user.uid,
+          uid: user.uid,
           email: user.email,
         };
 
@@ -40,7 +40,7 @@ const DefaultLayout: FC = () => {
   return (
     <section className="min-h-screen bg-gray-50">
       {showHeader && <Header />}
-      <main className="p-4">
+      <main className="p-4 mx-auto max-w-7xl">
         <Outlet />
       </main>
     </section>
