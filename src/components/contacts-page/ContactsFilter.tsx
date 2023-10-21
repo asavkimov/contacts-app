@@ -1,8 +1,10 @@
 import { FC, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+
 import FormInput from 'components/form/FormInput';
 import FormSelect from 'components/form/FormSelect';
 import Button from 'components/ui/Button';
+
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { resetContactsFilter, setContactsFilter } from 'store/contacts/slice';
 import { fetchContacts } from 'store/contacts/actions';

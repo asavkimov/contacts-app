@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { RootState } from '../store';
+import { RootState } from 'store/store';
 import api from 'api';
 
 export const fetchLabels = createAsyncThunk('labels/fetchLabels', async (_, ThunkApi) => {

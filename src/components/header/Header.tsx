@@ -1,9 +1,10 @@
+import { FC } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from 'components/ui/Button';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { logout } from 'store/auth/slice';
-import { Link, useNavigate } from 'react-router-dom';
 
-const Header = () => {
+const Header: FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 

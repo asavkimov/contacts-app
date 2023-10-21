@@ -1,18 +1,19 @@
 import { FC, useEffect, useState } from 'react';
 import * as yup from 'yup';
 import api from 'api';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { yupResolver } from '@hookform/resolvers/yup';
+
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { fetchLabels } from 'store/labels/actions';
+import { fetchContact } from 'store/contacts/actions';
 
 import Button from 'components/ui/Button';
 import FormInput from 'components/form/FormInput';
 import FormSelect from 'components/form/FormSelect';
 import { Messages } from 'components/form/messages';
-import { fetchContact } from '../../store/contacts/actions';
-import Loader from '../loader/Loader';
+import Loader from 'components/loader/Loader';
 
 interface SubmitData {
   fullname: string;

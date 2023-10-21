@@ -1,21 +1,18 @@
 import { FC, MouseEvent, useCallback, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from 'store/hooks';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import cn from 'classnames';
+import { Link } from 'react-router-dom';
+import api from 'api';
 
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { fetchLabels } from 'store/labels/actions';
 import { fetchContacts } from 'store/contacts/actions';
+import { getLabelColor } from 'domain/services/label';
+import { formatPhoneToInter } from 'domain/services/phone';
+import { Contact } from 'domain/entities/contact';
 
 import Button from 'components/ui/Button';
-import FormInput from 'components/form/FormInput';
-import FormSelect from 'components/form/FormSelect';
-import { Contact } from 'domain/entities/contact';
-import cn from 'classnames';
 import Loader from 'components/loader/Loader';
-import { getLabelColor } from 'domain/services/label';
-import api from 'api';
-import { Link } from 'react-router-dom';
-import { formatPhoneToInter } from 'domain/services/phone';
-import ContactsFilter from './ContactsFilter';
+import ContactsFilter from 'components/contacts-page/ContactsFilter';
 
 const ContactsPage: FC = () => {
   const dispatch = useAppDispatch();

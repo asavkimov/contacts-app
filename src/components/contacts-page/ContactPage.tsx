@@ -1,12 +1,14 @@
 import { FC, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { useParams } from 'react-router-dom';
+import cn from 'classnames';
+
 import { fetchContact } from 'store/contacts/actions';
-import Loader from 'components/loader/Loader';
 import { fetchLabels } from 'store/labels/actions';
 import { getLabelColor } from 'domain/services/label';
-import cn from 'classnames';
 import { formatPhoneToInter } from 'domain/services/phone';
+
+import Loader from 'components/loader/Loader';
 
 const ContactPage: FC = () => {
   const dispatch = useAppDispatch();

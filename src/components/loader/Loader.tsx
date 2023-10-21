@@ -1,6 +1,6 @@
-import { LoadingIcon } from '../icons';
 import { FC } from 'react';
 import cn from 'classnames';
+import { LoadingIcon } from 'components/icons';
 
 interface Props {
   className?: string;

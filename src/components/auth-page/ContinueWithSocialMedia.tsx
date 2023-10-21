@@ -1,8 +1,8 @@
-import { GithubIcon, GoogleIcon } from '../icons';
-import api from 'api';
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import LoaderFullScreen from '../loader/LoaderFullScreen';
+import api from 'api';
+import LoaderFullScreen from 'components/loader/LoaderFullScreen';
+import { GithubIcon, GoogleIcon } from 'components/icons';
 
 const ContinueWithSocialMedia: FC = () => {
   const navigate = useNavigate();

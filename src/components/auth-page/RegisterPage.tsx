@@ -1,15 +1,17 @@
 import { FC } from 'react';
-import FormInput from 'components/form/FormInput';
-import Button from 'components/ui/Button';
 import { Link, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import api from 'api';
-import { Messages } from 'components/form/messages';
-import { yupResolver } from '@hookform/resolvers/yup';
+
 import { useAppDispatch } from 'store/hooks';
 import { setUser } from 'store/auth/slice';
-import ContinueWithSocialMedia from './ContinueWithSocialMedia';
+
+import FormInput from 'components/form/FormInput';
+import Button from 'components/ui/Button';
+import { Messages } from 'components/form/messages';
+import ContinueWithSocialMedia from 'components/auth-page/ContinueWithSocialMedia';
 
 interface SubmitData {
   email: string;

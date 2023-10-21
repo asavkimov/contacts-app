@@ -1,4 +1,7 @@
-export const LoadingIcon = () => {
+import { FC } from 'react';
+import { IconsProps } from './types';
+
+export const LoadingIcon: FC<IconsProps> = () => {
   return (
     <svg
       aria-hidden="true"

@@ -1,11 +1,11 @@
 import { FC, ReactNode, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Header from 'components/header/Header';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from 'config/firebase';
 import { setUser } from 'store/auth/slice';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { getUserObject } from 'domain/services/user';
+import Header from 'components/header/Header';
 
 interface Props {
   children?: ReactNode;

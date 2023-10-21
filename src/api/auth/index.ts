@@ -11,7 +11,7 @@ import {
 } from 'firebase/auth';
 import { auth, db } from 'config/firebase';
 import { User } from 'domain/entities/user';
-import { getUserObject } from '../../domain/services/user';
+import { getUserObject } from 'domain/services/user';
 
 class AuthService {
   async register(params: RegisterParams) {
