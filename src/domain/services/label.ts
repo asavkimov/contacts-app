@@ -3,21 +3,22 @@ import { Label } from 'domain/entities/label';
 export const getLabelColor = (label: Label) => {
   const data = {
     bg: '',
-    text: '',
+    text: 'white',
   };
 
   switch (label.id) {
     case 1:
-      data.bg = 'green-light';
-      data.text = 'green';
+      data.bg = 'green';
       break;
     case 2:
-      data.bg = 'blue-light';
-      data.text = 'blue';
+      data.bg = 'blue';
       break;
     case 3:
       data.bg = 'yellow';
-      data.text = 'yellow-dark';
+      data.text = 'primary';
+      break;
+    case 4:
+      data.bg = 'red-600';
       break;
   }
 

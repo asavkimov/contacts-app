@@ -40,7 +40,7 @@ const Header = () => {
           </Button>
         </div>
       </div>
-      <div className="bg-blue-light bg-blue bg-yellow bg-yellow-dark bg-green bg-green-light"></div>
+      <div className="bg-blue-light bg-blue bg-yellow bg-yellow-dark bg-green bg-green-light bg-red-200 bg-white text-white"></div>
     </header>
   );
 };
