@@ -22,6 +22,8 @@ const DefaultLayout: FC<Props> = (props) => {
         const data: User = {
           uid: user.uid,
           email: user.email,
+          photoUrl: user.photoURL,
+          displayName: user.displayName,
         };
 
         dispatch(setUser(data));

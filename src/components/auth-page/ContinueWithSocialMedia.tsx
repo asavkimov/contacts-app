@@ -1,4 +1,4 @@
-import { AppleIcon, GoogleIcon } from '../icons';
+import { GithubIcon, GoogleIcon } from '../icons';
 import api from 'api';
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -10,10 +10,14 @@ const ContinueWithSocialMedia: FC = () => {
     api.auth.getGoogleRedirectResult(() => {
       navigate('/');
     });
-  }, []);
+  }, [navigate]);
 
   const handleLoginViaGoogle = () => {
     api.auth.loginViaGoogle();
+  };
+
+  const handleLoginViaGithub = () => {
+    api.auth.loginViaGithub();
   };
 
   return (
@@ -23,6 +27,12 @@ const ContinueWithSocialMedia: FC = () => {
         onClick={handleLoginViaGoogle}>
         <GoogleIcon />
         <span className="ml-2">Продолжить с Google</span>
+      </button>
+      <button
+        className="w-full py-3 btn btn-icon btn-white border border-primary-light"
+        onClick={handleLoginViaGithub}>
+        <GithubIcon />
+        <span className="ml-2">Продолжить с Github</span>
       </button>
     </div>
   );

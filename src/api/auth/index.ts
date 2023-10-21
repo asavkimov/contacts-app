@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   GoogleAuthProvider,
+  GithubAuthProvider,
   signInWithRedirect,
   getRedirectResult,
 } from 'firebase/auth';
@@ -22,6 +23,8 @@ class AuthService {
     const user: User = {
       uid: userCredential.user.uid,
       email: userCredential.user.email,
+      photoUrl: userCredential.user.photoURL,
+      displayName: userCredential.user.displayName,
     };
 
     const docRef = doc(db, 'users', user.uid);
@@ -36,6 +39,8 @@ class AuthService {
     const user: User = {
       uid: userCredential.user.uid,
       email: userCredential.user.email,
+      photoUrl: userCredential.user.photoURL,
+      displayName: userCredential.user.displayName,
     };
 
     return user;
@@ -53,6 +58,8 @@ class AuthService {
       const user: User = {
         uid: userCredential.user.uid,
         email: userCredential.user.email,
+        photoUrl: userCredential.user.photoURL,
+        displayName: userCredential.user.displayName,
       };
 
       const docRef = doc(db, 'users', user.uid);
@@ -62,6 +69,11 @@ class AuthService {
     } else {
       onError && onError();
     }
+  }
+
+  async loginViaGithub() {
+    const provider = new GithubAuthProvider();
+    await signInWithRedirect(auth, provider);
   }
 
   async logout() {
