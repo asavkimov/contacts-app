@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect } from 'react';
+import { FC, MouseEvent, useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -11,9 +11,10 @@ import FormSelect from 'components/form/FormSelect';
 import { Contact } from 'domain/entities/contact';
 import cn from 'classnames';
 import Loader from 'components/loader/Loader';
-import parsePhoneNumberFromString from 'libphonenumber-js';
 import { getLabelColor } from 'domain/services/label';
 import api from 'api';
+import { Link } from 'react-router-dom';
+import { formatPhoneToInter } from 'domain/phone';
 
 interface FilterData {
   fullname: string;
@@ -38,41 +39,36 @@ const ContactsPage: FC = () => {
     console.log(data);
   };
 
-  const handleDeleteContact = async (contact: Contact) => {
+  const handleDeleteContact = async (event: MouseEvent<HTMLButtonElement>, contact: Contact) => {
+    event.preventDefault();
+
     await api.contacts.deleteContact(contact.uid);
     dispatch(fetchContacts());
   };
 
   const renderContactCard = useCallback(
-    (contact: Contact, index: number) => {
+    (contact: Contact) => {
       const label = labels.find((l) => l.id === contact.label_id)!;
       const labelColors = getLabelColor(label);
-      const parsedPhone = parsePhoneNumberFromString(contact.phone);
 
       return (
-        <div
-          className="min-h-[100px] flex-[0_1_32.5%] border border-primary-light shadow-md rounded-md p-[12px]"
+        <Link
+          to={`/contacts/${contact.uid}`}
+          className="flex-[0_1_32.5%] border border-primary-light shadow-md rounded-md p-[12px] cursor-pointer"
           key={contact.uid}>
           <div className="flex items-center justify-between">
             <h3 className="font-semibold mt-[4px]">
               <i>{contact.fullname}</i>
             </h3>
-            {label && (
-              <div
-                className={cn(
-                  `text-xs py-1 px-2.5 bg-${labelColors.bg} text-${labelColors.text} w-min rounded-full`,
-                )}>
-                {label.title}
-              </div>
-            )}
+            <div
+              className={cn(
+                `text-xs py-1 px-2.5 bg-${labelColors.bg} text-${labelColors.text} w-min rounded-full`,
+              )}>
+              {label.title}
+            </div>
           </div>
-          <a href={`tel:${contact.phone}`} className="mt-[4px] max-w-max block hover:underline">
-            {parsedPhone?.isValid() ? parsedPhone?.formatInternational() : contact.phone}
-          </a>
-          <a href={`mailto:${contact.email}`} className="max-w-max block hover:underline">
-            {contact.email}
-          </a>
-          <div className="flex justify-end gap-[8px]">
+          <p className="mt-[4px] max-w-max block">{formatPhoneToInter(contact.phone)}</p>
+          <div className="flex justify-end gap-[8px] mt-[10px]">
             <Button
               to={`/contacts/${contact.uid}/edit`}
               className="flex justify-center items-center !py-1 btn-outline-secondary text-xs">
@@ -80,11 +76,11 @@ const ContactsPage: FC = () => {
             </Button>
             <Button
               className="flex justify-center items-center btn-outline-danger text-xs"
-              onClick={() => handleDeleteContact(contact)}>
+              onClick={(event) => handleDeleteContact(event, contact)}>
               Удалить
             </Button>
           </div>
-        </div>
+        </Link>
       );
     },
     [labels],

@@ -32,7 +32,7 @@ interface Props {
   edit?: boolean;
 }
 
-const ContactsCreatePage: FC<Props> = (props) => {
+const ContactsActionPage: FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const params = useParams<{ id: string }>();
@@ -125,4 +125,4 @@ const ContactsCreatePage: FC<Props> = (props) => {
   );
 };
 
-export default ContactsCreatePage;
+export default ContactsActionPage;

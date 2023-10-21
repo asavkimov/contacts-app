@@ -5,6 +5,7 @@ import { fetchLabels } from './actions';
 
 const initialState: LabelsState = {
   labels: [],
+  labelsLoading: true,
 };
 
 const labelsSlice = createSlice({
@@ -12,8 +13,12 @@ const labelsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(fetchLabels.pending, (state) => {
+      state.labelsLoading = true;
+    });
     builder.addCase(fetchLabels.fulfilled, (state, action: PayloadAction<GetLabelsResponse>) => {
       state.labels = action.payload;
+      state.labelsLoading = false;
     });
   },
 });
