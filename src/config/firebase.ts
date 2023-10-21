@@ -3,13 +3,13 @@ import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 
 export const firebaseConfig = {
-  apiKey: 'AIzaSyAPY55WvIGmwwkk8EpU2Kq2_a_5F-OyHZU',
-  authDomain: 'insane-dfa7d.firebaseapp.com',
-  projectId: 'insane-dfa7d',
-  storageBucket: 'insane-dfa7d.appspot.com',
-  messagingSenderId: '146725686412',
-  appId: '1:146725686412:web:0ddd67851e3ec556c2bfa9',
-  measurementId: 'G-3CSLBLSVT8',
+  apiKey: 'AIzaSyCmvj1t2f_TOEQymwM0mzyaFY3FFNrjWVo',
+  authDomain: 'ax-connects.firebaseapp.com',
+  projectId: 'ax-connects',
+  storageBucket: 'ax-connects.appspot.com',
+  messagingSenderId: '803049381147',
+  appId: '1:803049381147:web:57522265f334e6951a07be',
+  measurementId: 'G-1XN02345GP',
 };
 
 const app = initializeApp(firebaseConfig);
