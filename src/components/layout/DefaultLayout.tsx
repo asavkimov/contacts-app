@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Header from 'components/header/Header';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from 'config/firebase';
-import { User } from 'domain/entities/user';
 import { setUser } from 'store/auth/slice';
 import { useAppDispatch } from 'store/hooks';
+import { getUserObject } from 'domain/services/user';
 
 interface Props {
   children?: ReactNode;
@@ -19,12 +19,7 @@ const DefaultLayout: FC<Props> = (props) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const data: User = {
-          uid: user.uid,
-          email: user.email,
-          photoUrl: user.photoURL,
-          displayName: user.displayName,
-        };
+        const data = getUserObject(user);
 
         dispatch(setUser(data));
       } else {

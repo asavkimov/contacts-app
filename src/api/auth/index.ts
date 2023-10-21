@@ -11,6 +11,7 @@ import {
 } from 'firebase/auth';
 import { auth, db } from 'config/firebase';
 import { User } from 'domain/entities/user';
+import { getUserObject } from '../../domain/services/user';
 
 class AuthService {
   async register(params: RegisterParams) {
@@ -20,12 +21,7 @@ class AuthService {
       params.password,
     );
 
-    const user: User = {
-      uid: userCredential.user.uid,
-      email: userCredential.user.email,
-      photoUrl: userCredential.user.photoURL,
-      displayName: userCredential.user.displayName,
-    };
+    const user = getUserObject(userCredential.user);
 
     const docRef = doc(db, 'users', user.uid);
     await setDoc(docRef, user);
@@ -36,14 +32,7 @@ class AuthService {
   async login(params: LoginParams) {
     const userCredential = await signInWithEmailAndPassword(auth, params.email, params.password);
 
-    const user: User = {
-      uid: userCredential.user.uid,
-      email: userCredential.user.email,
-      photoUrl: userCredential.user.photoURL,
-      displayName: userCredential.user.displayName,
-    };
-
-    return user;
+    return getUserObject(userCredential.user);
   }
 
   async loginViaGoogle() {
@@ -55,12 +44,7 @@ class AuthService {
     const userCredential = await getRedirectResult(auth);
 
     if (userCredential) {
-      const user: User = {
-        uid: userCredential.user.uid,
-        email: userCredential.user.email,
-        photoUrl: userCredential.user.photoURL,
-        displayName: userCredential.user.displayName,
-      };
+      const user = getUserObject(userCredential.user);
 
       const docRef = doc(db, 'users', user.uid);
       await setDoc(docRef, user);
