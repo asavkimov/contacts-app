@@ -15,17 +15,10 @@ import { getLabelColor } from 'domain/services/label';
 import api from 'api';
 import { Link } from 'react-router-dom';
 import { formatPhoneToInter } from 'domain/phone';
-
-interface FilterData {
-  fullname: string;
-  phone: string;
-  email: string;
-  label_id: number;
-}
+import ContactsFilter from './ContactsFilter';
 
 const ContactsPage: FC = () => {
   const dispatch = useAppDispatch();
-  const { control, handleSubmit } = useForm<FilterData>();
 
   const { labels } = useAppSelector((state) => state.labels);
   const { contacts, contactsLoading } = useAppSelector((state) => state.contacts);
@@ -34,10 +27,6 @@ const ContactsPage: FC = () => {
     dispatch(fetchLabels());
     dispatch(fetchContacts());
   }, []);
-
-  const handleFilterContacts: SubmitHandler<FilterData> = (data) => {
-    console.log(data);
-  };
 
   const handleDeleteContact = async (event: MouseEvent<HTMLButtonElement>, contact: Contact) => {
     event.preventDefault();
@@ -94,38 +83,7 @@ const ContactsPage: FC = () => {
           Создать контакт
         </Button>
       </div>
-      <form
-        onSubmit={handleSubmit(handleFilterContacts)}
-        className="mt-[16px] flex items-end gap-[10px] border border-primary-light bg-white p-4 rounded-md">
-        <FormInput
-          label="Имя контакта"
-          control={control}
-          name="fullname"
-          classes={{ root: 'w-full' }}
-        />
-        <FormInput label="Email" control={control} name="email" classes={{ root: 'w-full' }} />
-        <FormInput
-          label="Номер телефона"
-          control={control}
-          name="phone"
-          placeholder="998"
-          classes={{ root: 'w-full' }}
-          defaultValue="998"
-        />
-        <FormSelect
-          label="Теги"
-          control={control}
-          name="label_id"
-          options={labels.map((label) => ({
-            label: label.title,
-            value: label.id,
-          }))}
-          classes={{ root: 'w-full' }}
-        />
-        <Button type="submit" className="h-[39px] btn-primary">
-          Поиск
-        </Button>
-      </form>
+      <ContactsFilter />
       <div className="mt-[16px]">
         {!contactsLoading && !contacts.length && (
           <div className="w-full p-8 flex justify-center items-center border rounded-md">

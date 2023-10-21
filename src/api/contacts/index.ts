@@ -1,8 +1,18 @@
 import { db } from 'config/firebase';
-import { collection, query, getDocs, doc, setDoc, deleteDoc, getDoc } from 'firebase/firestore';
+import {
+  collection,
+  query,
+  getDocs,
+  doc,
+  setDoc,
+  deleteDoc,
+  getDoc,
+  where,
+} from 'firebase/firestore';
 import {
   CreateContactData,
   GetContactResponse,
+  GetContactsParams,
   GetContactsResponse,
   UpdateContactData,
 } from './types';
@@ -17,10 +27,27 @@ class ContactsService {
     this.contactsCollection = `users/${uid}/contacts`;
   }
 
-  async getContacts(): Promise<GetContactsResponse> {
+  async getContacts(params?: GetContactsParams): Promise<GetContactsResponse> {
     this.refresh();
 
-    const q = query(collection(db, this.contactsCollection));
+    console.log(params);
+
+    const contactsRef = collection(db, this.contactsCollection);
+    let q = query(contactsRef);
+
+    if (params?.fullname) {
+      q = query(contactsRef, where('fullname', '==', params.fullname));
+    }
+    if (params?.phone) {
+      q = query(contactsRef, where('phone', '==', params.phone));
+    }
+    if (params?.email) {
+      q = query(contactsRef, where('email', '==', params.email));
+    }
+    if (params?.label_id) {
+      q = query(contactsRef, where('label_id', '==', params.label_id));
+    }
+
     const response = await getDocs(q);
 
     return response.docs.map(

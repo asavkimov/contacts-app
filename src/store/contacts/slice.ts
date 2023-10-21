@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GetContactResponse, GetContactsResponse } from 'api/contacts/types';
+import { GetContactResponse, GetContactsParams, GetContactsResponse } from 'api/contacts/types';
 import { ContactsState } from './types';
 import { fetchContact, fetchContacts } from './actions';
 
@@ -13,7 +13,14 @@ const initialState: ContactsState = {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  reducers: {},
+  reducers: {
+    setContactsFilter: (state, action: PayloadAction<GetContactsParams>) => {
+      state.contactsFilter = action.payload;
+    },
+    resetContactsFilter: (state) => {
+      state.contactsFilter = {};
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchContacts.pending, (state) => {
       state.contactsLoading = true;
@@ -35,5 +42,7 @@ const contactsSlice = createSlice({
     });
   },
 });
+
+export const { setContactsFilter, resetContactsFilter } = contactsSlice.actions;
 
 export const contactsReducer = contactsSlice.reducer;

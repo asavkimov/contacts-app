@@ -12,3 +12,10 @@ export interface CreateContactData {
 }
 
 export interface UpdateContactData extends CreateContactData {}
+
+export interface GetContactsParams {
+  fullname?: string;
+  phone?: string;
+  email?: string;
+  label_id?: number;
+}
