@@ -61,7 +61,7 @@ const LoginPage: FC = () => {
             type="password"
             placeholder="••••••••"
           />
-          <Button type="submit" className="w-full btn-primary">
+          <Button type="submit" className="w-full h-[40px] btn-primary">
             Войти
           </Button>
         </form>

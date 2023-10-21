@@ -1,7 +1,7 @@
 import Button from 'components/ui/Button';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { logout } from 'store/auth/slice';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +17,9 @@ const Header = () => {
   return (
     <header className="sticky top-0 bg-white shadow-sm shadow-primary-light">
       <div className="flex items-center justify-between p-4 mx-auto max-w-7xl">
-        <h1 className="text-primary font-bold">AX CONNECTS</h1>
+        <Link to="/">
+          <h1 className="text-primary font-bold">AX CONNECTS</h1>
+        </Link>
         <div className="flex items-center gap-[16px]">
           {user && (
             <div className="flex items-center gap-[10px]">

@@ -8,6 +8,7 @@ import ContactsPage from 'components/contacts-page/ContactsPage';
 import LoginPage from 'components/auth-page/LoginPage';
 import RegisterPage from 'components/auth-page/RegisterPage';
 import DefaultLayout from 'components/layout/DefaultLayout';
+import ContactsCreatePage from 'components/contacts-page/ContactsCreatePage';
 
 const App = () => {
   const methods = useForm();
@@ -24,6 +25,7 @@ const App = () => {
               <Route path="/register" element={<RegisterPage />} />
 
               <Route path="/contacts" element={<ContactsPage />} />
+              <Route path="/contacts/create" element={<ContactsCreatePage />} />
               <Route path="/contacts/:id" element={<ContactsPage />} />
             </Routes>
           </DefaultLayout>

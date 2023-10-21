@@ -74,8 +74,11 @@ const ContactsPage = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-end">
-        <Button className="py-1 btn-primary">Создать контакт</Button>
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-medium">Контакты</h3>
+        <Button to="/contacts/create" className="py-1 btn-primary">
+          Создать контакт
+        </Button>
       </div>
       <form
         onSubmit={handleSubmit(handleFilterContacts)}
@@ -107,7 +110,7 @@ const ContactsPage = () => {
             classes={{ root: 'w-full' }}
           />
         )}
-        <Button type="submit" className="py-0 btn-primary">
+        <Button type="submit" className="h-[39px] btn-primary">
           Поиск
         </Button>
       </form>
