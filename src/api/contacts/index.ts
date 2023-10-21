@@ -35,17 +35,14 @@ class ContactsService {
     const contactsRef = collection(db, this.contactsCollection);
     let q = query(contactsRef);
 
-    if (params?.fullname) {
-      q = query(contactsRef, where('fullname', '==', params.fullname));
-    }
-    if (params?.phone) {
-      q = query(contactsRef, where('phone', '==', params.phone));
-    }
-    if (params?.email) {
-      q = query(contactsRef, where('email', '==', params.email));
-    }
-    if (params?.label_id) {
-      q = query(contactsRef, where('label_id', '==', params.label_id));
+    if (params) {
+      Object.keys(params).forEach((key) => {
+        const value = params[key as keyof typeof params];
+
+        if (value) {
+          q = query(contactsRef, where(key, '==', value));
+        }
+      });
     }
 
     const response = await getDocs(q);

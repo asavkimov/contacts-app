@@ -34,7 +34,7 @@ const RegisterPage: FC = () => {
       const user = await api.auth.register(data);
 
       dispatch(setUser(user));
-      navigate('/');
+      navigate('/contacts');
     } catch (err) {
       setError('email', { message: Messages.EMAIL_ALREADY_EXISTS });
     }

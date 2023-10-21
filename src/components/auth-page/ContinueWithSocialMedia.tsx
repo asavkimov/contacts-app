@@ -18,7 +18,7 @@ const ContinueWithSocialMedia: FC = () => {
       const user = await api.auth.getRedirectAuthResult();
 
       if (user) {
-        navigate('/');
+        navigate('/contacts');
       }
     } finally {
       setRedirectResponseLoading(false);

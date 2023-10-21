@@ -17,7 +17,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 bg-white shadow-sm shadow-primary-light">
       <div className="flex items-center justify-between p-4 mx-auto max-w-7xl">
-        <Link to="/">
+        <Link to="/contacts">
           <h1 className="text-primary font-bold">AX CONNECTS</h1>
         </Link>
         <div className="flex items-center gap-[16px]">

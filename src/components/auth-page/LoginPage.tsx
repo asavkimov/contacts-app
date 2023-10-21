@@ -34,7 +34,7 @@ const LoginPage: FC = () => {
       const user = await api.auth.login(data);
 
       dispatch(setUser(user));
-      navigate('/');
+      navigate('/contacts');
     } catch {
       setError('password', { message: 'Email или пароль не корректный' });
     } finally {
