@@ -8,10 +8,10 @@ import { fetchContacts } from 'store/contacts/actions';
 import Button from 'components/ui/Button';
 import FormInput from 'components/form/FormInput';
 import FormSelect from 'components/form/FormSelect';
-import { Contact } from '../../domain/entities/contact';
+import { Contact } from 'domain/entities/contact';
 import cn from 'classnames';
-import Loader from '../loader/Loader';
-import parsePhoneNumberFromString, { formatNumber } from 'libphonenumber-js';
+import Loader from 'components/loader/Loader';
+import parsePhoneNumberFromString from 'libphonenumber-js';
 
 interface FilterData {
   fullname: string;
