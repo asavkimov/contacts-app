@@ -12,6 +12,7 @@ import { Contact } from 'domain/entities/contact';
 import cn from 'classnames';
 import Loader from 'components/loader/Loader';
 import parsePhoneNumberFromString from 'libphonenumber-js';
+import { getLabelColor } from '../../domain/services/label';
 
 interface FilterData {
   fullname: string;
@@ -38,8 +39,9 @@ const ContactsPage = () => {
 
   const renderContactCard = useCallback(
     (contact: Contact, index: number) => {
-      const label = labels.find((l) => l.id === contact.label_id);
-      const phone = parsePhoneNumberFromString(contact.phone)?.formatInternational() ?? '';
+      const label = labels.find((l) => l.id === contact.label_id)!;
+      const labelColors = getLabelColor(label);
+      const parsedPhone = parsePhoneNumberFromString(contact.phone);
 
       return (
         <div
@@ -52,14 +54,14 @@ const ContactsPage = () => {
             {label && (
               <div
                 className={cn(
-                  `text-xs py-1 px-2.5 bg-[${label.bg_color}] text-[${label.text_color}] w-min rounded-full`,
+                  `text-xs py-1 px-2.5 bg-[${labelColors.bg}] text-[${labelColors.text}] w-min rounded-full`,
                 )}>
                 {label.title}
               </div>
             )}
           </div>
           <a href={`tel:${contact.phone}`} className="mt-[4px] max-w-max block hover:underline">
-            {phone}
+            {parsedPhone?.isValid() ? parsedPhone?.formatInternational() : contact.phone}
           </a>
           <a href={`mailto:${contact.email}`} className="max-w-max block hover:underline">
             {contact.email}
