@@ -1,16 +1,29 @@
 import { GithubIcon, GoogleIcon } from '../icons';
 import api from 'api';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import LoaderFullScreen from '../loader/LoaderFullScreen';
 
 const ContinueWithSocialMedia: FC = () => {
   const navigate = useNavigate();
+  const [redirectResponseLoading, setRedirectResponseLoading] = useState(false);
 
   useEffect(() => {
-    api.auth.getGoogleRedirectResult(() => {
-      navigate('/');
-    });
-  }, [navigate]);
+    listenRedirectResponse();
+  }, []);
+
+  const listenRedirectResponse = async () => {
+    try {
+      setRedirectResponseLoading(true);
+      const user = await api.auth.getRedirectAuthResult();
+
+      if (user) {
+        navigate('/');
+      }
+    } finally {
+      setRedirectResponseLoading(false);
+    }
+  };
 
   const handleLoginViaGoogle = () => {
     api.auth.loginViaGoogle();
@@ -34,6 +47,7 @@ const ContinueWithSocialMedia: FC = () => {
         <GithubIcon />
         <span className="ml-2">Продолжить с Github</span>
       </button>
+      {redirectResponseLoading && <LoaderFullScreen />}
     </div>
   );
 };

@@ -40,24 +40,24 @@ class AuthService {
     await signInWithRedirect(auth, provider);
   }
 
-  async getGoogleRedirectResult(onSuccess?: () => void, onError?: () => void) {
-    const userCredential = await getRedirectResult(auth);
-
-    if (userCredential) {
-      const user = getUserObject(userCredential.user);
-
-      const docRef = doc(db, 'users', user.uid);
-      await setDoc(docRef, user);
-
-      onSuccess && onSuccess();
-    } else {
-      onError && onError();
-    }
-  }
-
   async loginViaGithub() {
     const provider = new GithubAuthProvider();
     await signInWithRedirect(auth, provider);
+  }
+
+  async getRedirectAuthResult(): Promise<User | null> {
+    const userCredential = await getRedirectResult(auth);
+
+    if (!userCredential) {
+      return null;
+    }
+
+    const user = getUserObject(userCredential.user);
+
+    const docRef = doc(db, 'users', user.uid);
+    await setDoc(docRef, user);
+
+    return user;
   }
 
   async logout() {
