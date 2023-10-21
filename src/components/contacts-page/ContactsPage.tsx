@@ -54,7 +54,7 @@ const ContactsPage = () => {
             {label && (
               <div
                 className={cn(
-                  `text-xs py-1 px-2.5 bg-[${labelColors.bg}] text-[${labelColors.text}] w-min rounded-full`,
+                  `text-xs py-1 px-2.5 bg-${labelColors.bg} text-${labelColors.text} w-min rounded-full`,
                 )}>
                 {label.title}
               </div>

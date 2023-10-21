@@ -8,16 +8,16 @@ export const getLabelColor = (label: Label) => {
 
   switch (label.id) {
     case 1:
-      data.bg = '#a6c2be';
-      data.text = '#21675e';
+      data.bg = 'green-light';
+      data.text = 'green';
       break;
     case 2:
-      data.bg = '#c199ff';
-      data.text = '#6600ff';
+      data.bg = 'blue-light';
+      data.text = 'blue';
       break;
     case 3:
-      data.bg = '#ffff93';
-      data.text = '#333314';
+      data.bg = 'yellow';
+      data.text = 'yellow-dark';
       break;
   }
 

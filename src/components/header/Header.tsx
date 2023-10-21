@@ -33,11 +33,12 @@ const Header = () => {
               <h4>{user.displayName || user.email}</h4>
             </div>
           )}
-          <Button className="h-[40px] btn btn-outline-danger py-0" onClick={handleLogout}>
+          <Button className="h-[40px] btn btn-outline-danger !py-0 text-sm" onClick={handleLogout}>
             Выйти
           </Button>
         </div>
       </div>
+      <div className="bg-blue-light bg-blue bg-yellow bg-yellow-dark bg-green bg-green-light"></div>
     </header>
   );
 };
