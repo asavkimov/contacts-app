@@ -1,11 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { GetContactsResponse } from 'api/contacts/types';
+import { GetContactResponse, GetContactsResponse } from 'api/contacts/types';
 import { ContactsState } from './types';
-import { fetchContacts } from './actions';
+import { fetchContact, fetchContacts } from './actions';
 
 const initialState: ContactsState = {
   contacts: [],
   contactsLoading: true,
+  currentContact: null,
+  currentContactLoading: true,
 };
 
 const contactsSlice = createSlice({
@@ -23,6 +25,14 @@ const contactsSlice = createSlice({
         state.contactsLoading = false;
       },
     );
+    builder.addCase(fetchContact.pending, (state) => {
+      state.currentContact = null;
+      state.currentContactLoading = true;
+    });
+    builder.addCase(fetchContact.fulfilled, (state, action: PayloadAction<GetContactResponse>) => {
+      state.currentContact = action.payload;
+      state.currentContactLoading = false;
+    });
   },
 });
 

@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import * as yup from 'yup';
 import api from 'api';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,6 +11,8 @@ import Button from 'components/ui/Button';
 import FormInput from 'components/form/FormInput';
 import FormSelect from 'components/form/FormSelect';
 import { Messages } from 'components/form/messages';
+import { fetchContact } from '../../store/contacts/actions';
+import Loader from '../loader/Loader';
 
 interface SubmitData {
   fullname: string;
@@ -26,27 +28,48 @@ const validationSchema = yup.object({
   label_id: yup.string().required(Messages.REQUIRED_FIELD),
 });
 
-const ContactsCreatePage: FC = () => {
+interface Props {
+  edit?: boolean;
+}
+
+const ContactsCreatePage: FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { control, handleSubmit } = useForm<SubmitData>({
+  const params = useParams<{ id: string }>();
+
+  const { control, handleSubmit, setValue } = useForm<SubmitData>({
     resolver: yupResolver(validationSchema),
   });
 
-  const { user } = useAppSelector((state) => state.auth);
   const { labels } = useAppSelector((state) => state.labels);
+  const { currentContact, currentContactLoading } = useAppSelector((state) => state.contacts);
 
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     dispatch(fetchLabels());
-  }, []);
+  }, [dispatch]);
 
-  if (!user) {
-    return null;
-  }
+  useEffect(() => {
+    if (!params.id) {
+      return;
+    }
 
-  const handleCreateContact: SubmitHandler<SubmitData> = async (data) => {
+    dispatch(fetchContact(params.id));
+  }, [dispatch, params.id]);
+
+  useEffect(() => {
+    if (!props.edit || !currentContact) {
+      return;
+    }
+
+    setValue('fullname', currentContact.fullname);
+    setValue('phone', currentContact.phone);
+    setValue('email', currentContact.email);
+    setValue('label_id', String(currentContact.label_id));
+  }, [currentContact, props.edit, setValue]);
+
+  const handleSubmitForm: SubmitHandler<SubmitData> = async (data) => {
     try {
       setLoading(true);
 
@@ -55,17 +78,28 @@ const ContactsCreatePage: FC = () => {
         label_id: Number(data.label_id),
       };
 
-      await api.contacts.createContact(contactData);
+      if (props.edit && currentContact) {
+        await api.contacts.updateContact(currentContact.uid, contactData);
+      } else {
+        await api.contacts.createContact(contactData);
+      }
+
       navigate('/contacts');
     } finally {
       setLoading(false);
     }
   };
 
+  if (props.edit && currentContactLoading) {
+    return <Loader className="mt-[30px]" />;
+  }
+
   return (
     <div>
-      <h3 className="text-lg font-medium">Создать контакт</h3>
-      <form onSubmit={handleSubmit(handleCreateContact)}>
+      <h3 className="text-lg font-medium">
+        {props.edit ? 'Редактировать контакт' : 'Создать контакт'}
+      </h3>
+      <form onSubmit={handleSubmit(handleSubmitForm)}>
         <div className="grid grid-cols-2 gap-[14px] mt-[20px]">
           <FormInput name="fullname" control={control} label="ФИО" />
           <FormInput name="phone" control={control} label="Номер телефона" defaultValue="+998" />
@@ -83,7 +117,7 @@ const ContactsCreatePage: FC = () => {
         </div>
         <div className="flex justify-end">
           <Button className="h-[40px] btn-primary mt-[14px]" disabled={loading}>
-            Создать
+            {props.edit ? 'Сохранить' : 'Создать'}
           </Button>
         </div>
       </form>

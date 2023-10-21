@@ -27,6 +27,7 @@ const App = () => {
               <Route path="/contacts" element={<ContactsPage />} />
               <Route path="/contacts/create" element={<ContactsCreatePage />} />
               <Route path="/contacts/:id" element={<ContactsPage />} />
+              <Route path="/contacts/:id/edit" element={<ContactsCreatePage edit={true} />} />
             </Routes>
           </DefaultLayout>
         </FormProvider>

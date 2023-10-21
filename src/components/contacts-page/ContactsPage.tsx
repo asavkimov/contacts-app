@@ -13,8 +13,7 @@ import cn from 'classnames';
 import Loader from 'components/loader/Loader';
 import parsePhoneNumberFromString from 'libphonenumber-js';
 import { getLabelColor } from 'domain/services/label';
-import { Link } from 'react-router-dom';
-import api from '../../api';
+import api from 'api';
 
 interface FilterData {
   fullname: string;
@@ -53,7 +52,7 @@ const ContactsPage: FC = () => {
       return (
         <div
           className="min-h-[100px] flex-[0_1_32.5%] border border-primary-light shadow-md rounded-md p-[12px]"
-          key={contact.phone}>
+          key={contact.uid}>
           <div className="flex items-center justify-between">
             <h3 className="font-semibold mt-[4px]">
               <i>{contact.fullname}</i>

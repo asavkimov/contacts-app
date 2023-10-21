@@ -1,6 +1,11 @@
 import { db } from 'config/firebase';
-import { collection, query, getDocs, doc, setDoc, deleteDoc } from 'firebase/firestore';
-import { CreateContactData, GetContactsResponse } from './types';
+import { collection, query, getDocs, doc, setDoc, deleteDoc, getDoc } from 'firebase/firestore';
+import {
+  CreateContactData,
+  GetContactResponse,
+  GetContactsResponse,
+  UpdateContactData,
+} from './types';
 import { Contact } from 'domain/entities/contact';
 
 class ContactsService {
@@ -27,12 +32,32 @@ class ContactsService {
     );
   }
 
+  async getContact(contactUID: string): Promise<GetContactResponse> {
+    this.refresh();
+
+    const contactRef = doc(db, this.contactsCollection, contactUID);
+    const res = await getDoc(contactRef);
+
+    const contactData: Contact = {
+      ...(res.data() as Contact),
+      uid: res.id,
+    };
+
+    return contactData;
+  }
+
   async createContact(data: CreateContactData) {
     this.refresh();
 
     const newContact = doc(collection(db, this.contactsCollection));
+    await setDoc(newContact, data);
+  }
 
-    return await setDoc(newContact, data);
+  async updateContact(contactUID: string, data: UpdateContactData) {
+    this.refresh();
+
+    const contactRef = doc(collection(db, this.contactsCollection), contactUID);
+    await setDoc(contactRef, data);
   }
 
   async deleteContact(contactUID: string) {
