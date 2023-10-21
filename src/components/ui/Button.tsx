@@ -7,7 +7,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button: FC<ButtonProps> = ({ className, children, ...rest }) => {
   return (
-    <button className={cn('py-3 btn btn-primary', className)} {...rest}>
+    <button className={cn('min-h-[40px] text-sm py-3 btn', className)} {...rest}>
       {children}
     </button>
   );

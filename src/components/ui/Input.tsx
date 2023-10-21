@@ -14,7 +14,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: FC<InputProps> = ({ classes, helperText, label, ...rest }) => {
   return (
-    <label className={cn('block', classes?.root)}>
+    <label className={cn('min-h-[40px] block', classes?.root)}>
       <span className={cn('block mb-1 text-xs font-medium text-gray-700', classes?.label)}>
         {label}
       </span>

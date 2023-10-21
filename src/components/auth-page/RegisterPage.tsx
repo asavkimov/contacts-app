@@ -60,7 +60,7 @@ const RegisterPage: FC = () => {
             type="password"
             placeholder="••••••••"
           />
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full btn-primary">
             Зарегистрироваться
           </Button>
         </form>
