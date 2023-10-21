@@ -14,11 +14,13 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
       state.authorized = true;
+      localStorage.setItem('uid', action.payload.uid);
     },
     logout: (state) => {
       api.auth.logout();
       state.authorized = false;
       state.user = undefined;
+      localStorage.removeItem('uid');
     },
   },
 });

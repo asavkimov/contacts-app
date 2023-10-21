@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { FC, useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -12,7 +12,9 @@ import { Contact } from 'domain/entities/contact';
 import cn from 'classnames';
 import Loader from 'components/loader/Loader';
 import parsePhoneNumberFromString from 'libphonenumber-js';
-import { getLabelColor } from '../../domain/services/label';
+import { getLabelColor } from 'domain/services/label';
+import { Link } from 'react-router-dom';
+import api from '../../api';
 
 interface FilterData {
   fullname: string;
@@ -21,7 +23,7 @@ interface FilterData {
   label_id: number;
 }
 
-const ContactsPage = () => {
+const ContactsPage: FC = () => {
   const dispatch = useAppDispatch();
   const { control, handleSubmit } = useForm<FilterData>();
 
@@ -37,6 +39,11 @@ const ContactsPage = () => {
     console.log(data);
   };
 
+  const handleDeleteContact = async (contact: Contact) => {
+    await api.contacts.deleteContact(contact.uid);
+    dispatch(fetchContacts());
+  };
+
   const renderContactCard = useCallback(
     (contact: Contact, index: number) => {
       const label = labels.find((l) => l.id === contact.label_id)!;
@@ -45,7 +52,7 @@ const ContactsPage = () => {
 
       return (
         <div
-          className="min-h-[100px] flex-[0_1_32.5%] border border-[#f8e098] rounded-md bg-[#fdf8ea] p-[12px] hover:shadow-[#f9e6ad] hover:shadow-sm"
+          className="min-h-[100px] flex-[0_1_32.5%] border border-primary-light shadow-md rounded-md p-[12px]"
           key={contact.phone}>
           <div className="flex items-center justify-between">
             <h3 className="font-semibold mt-[4px]">
@@ -66,6 +73,18 @@ const ContactsPage = () => {
           <a href={`mailto:${contact.email}`} className="max-w-max block hover:underline">
             {contact.email}
           </a>
+          <div className="flex justify-end gap-[8px]">
+            <Button
+              to={`/contacts/${contact.uid}/edit`}
+              className="flex justify-center items-center !py-1 btn-outline-secondary text-xs">
+              Редакт.
+            </Button>
+            <Button
+              className="flex justify-center items-center btn-outline-danger text-xs"
+              onClick={() => handleDeleteContact(contact)}>
+              Удалить
+            </Button>
+          </div>
         </div>
       );
     },
@@ -98,18 +117,16 @@ const ContactsPage = () => {
           classes={{ root: 'w-full' }}
           defaultValue="998"
         />
-        {!!labels.length && (
-          <FormSelect
-            label="Теги"
-            control={control}
-            name="label_id"
-            options={labels.map((label) => ({
-              label: label.title,
-              value: label.id,
-            }))}
-            classes={{ root: 'w-full' }}
-          />
-        )}
+        <FormSelect
+          label="Теги"
+          control={control}
+          name="label_id"
+          options={labels.map((label) => ({
+            label: label.title,
+            value: label.id,
+          }))}
+          classes={{ root: 'w-full' }}
+        />
         <Button type="submit" className="h-[39px] btn-primary">
           Поиск
         </Button>

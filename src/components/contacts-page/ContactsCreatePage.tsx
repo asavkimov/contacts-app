@@ -55,7 +55,7 @@ const ContactsCreatePage: FC = () => {
         label_id: Number(data.label_id),
       };
 
-      await api.contacts.createContact(user.uid, contactData);
+      await api.contacts.createContact(contactData);
       navigate('/contacts');
     } finally {
       setLoading(false);

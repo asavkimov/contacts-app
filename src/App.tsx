@@ -14,8 +14,8 @@ const App = () => {
   const methods = useForm();
 
   return (
-    <BrowserRouter>
-      <Provider store={store}>
+    <Provider store={store}>
+      <BrowserRouter>
         <FormProvider {...methods}>
           <DefaultLayout>
             <Routes>
@@ -30,8 +30,8 @@ const App = () => {
             </Routes>
           </DefaultLayout>
         </FormProvider>
-      </Provider>
-    </BrowserRouter>
+      </BrowserRouter>
+    </Provider>
   );
 };
 
