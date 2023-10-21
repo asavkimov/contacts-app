@@ -6,7 +6,7 @@ import Loader from 'components/loader/Loader';
 import { fetchLabels } from 'store/labels/actions';
 import { getLabelColor } from 'domain/services/label';
 import cn from 'classnames';
-import { formatPhoneToInter } from 'domain/phone';
+import { formatPhoneToInter } from 'domain/services/phone';
 
 const ContactPage: FC = () => {
   const dispatch = useAppDispatch();

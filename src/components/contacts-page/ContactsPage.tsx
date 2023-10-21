@@ -14,7 +14,7 @@ import Loader from 'components/loader/Loader';
 import { getLabelColor } from 'domain/services/label';
 import api from 'api';
 import { Link } from 'react-router-dom';
-import { formatPhoneToInter } from 'domain/phone';
+import { formatPhoneToInter } from 'domain/services/phone';
 import ContactsFilter from './ContactsFilter';
 
 const ContactsPage: FC = () => {
