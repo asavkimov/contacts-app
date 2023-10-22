@@ -14,7 +14,7 @@ import { User } from 'domain/entities/user';
 import { getUserObject } from 'domain/services/user';
 
 class AuthService {
-  async register(params: RegisterParams) {
+  async register(params: RegisterParams): Promise<User> {
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       params.email,
@@ -29,18 +29,18 @@ class AuthService {
     return user;
   }
 
-  async login(params: LoginParams) {
+  async login(params: LoginParams): Promise<User> {
     const userCredential = await signInWithEmailAndPassword(auth, params.email, params.password);
 
     return getUserObject(userCredential.user);
   }
 
-  async loginViaGoogle() {
+  async loginViaGoogle(): Promise<void> {
     const provider = new GoogleAuthProvider();
     await signInWithRedirect(auth, provider);
   }
 
-  async loginViaGithub() {
+  async loginViaGithub(): Promise<void> {
     const provider = new GithubAuthProvider();
     await signInWithRedirect(auth, provider);
   }
@@ -60,10 +60,8 @@ class AuthService {
     return user;
   }
 
-  async logout() {
+  async logout(): Promise<void> {
     await signOut(auth);
-
-    return true;
   }
 }
 
