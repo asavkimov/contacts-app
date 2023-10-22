@@ -37,11 +37,16 @@ class AuthService {
 
   async loginViaGoogle(): Promise<void> {
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({
+      prompt: 'select_account',
+    });
+
     await signInWithRedirect(auth, provider);
   }
 
   async loginViaGithub(): Promise<void> {
     const provider = new GithubAuthProvider();
+
     await signInWithRedirect(auth, provider);
   }
 
